@@ -1,0 +1,261 @@
+{
+  "liblabVersion": "2.1.31",
+  "date": "2024-09-05T21:54:58.569Z",
+  "config": {
+    "apiId": 1126,
+    "sdkName": "salad-cloud-imds-sdk",
+    "sdkVersion": "0.9.0-alpha.1",
+    "liblabVersion": "2",
+    "deliveryMethods": ["zip"],
+    "languages": ["typescript"],
+    "specFilePath": "spec.yaml",
+    "docs": ["snippets"],
+    "languageOptions": {
+      "csharp": {
+        "packageId": "Salad.Cloud.IMDS.SDK",
+        "authors": [
+          {
+            "name": "salad"
+          },
+          {
+            "name": "seniorquico"
+          }
+        ],
+        "githubRepoName": "salad-cloud-imds-sdk-dotnet",
+        "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-dotnet",
+        "ignoreFiles": [".gitignore", "LICENSE"],
+        "liblabVersion": "2",
+        "sdkVersion": "0.9.0-alpha.1",
+        "targetBranch": "main"
+      },
+      "go": {
+        "goModuleName": "github.com/saladtechnologies/salad-cloud-imds-sdk-go",
+        "githubRepoName": "salad-cloud-imds-sdk-go",
+        "ignoreFiles": [".gitignore", "LICENSE"],
+        "liblabVersion": "2",
+        "sdkVersion": "0.9.0-alpha.1",
+        "targetBranch": "main"
+      },
+      "java": {
+        "groupId": "com.salad.cloud",
+        "artifactId": "imds-sdk",
+        "developers": [
+          {
+            "name": "SaladCloud Developers",
+            "email": "dev@salad.com",
+            "organization": "Salad Technologies",
+            "organizationUrl": "https://salad.com"
+          },
+          {
+            "name": "Kyle Dodson",
+            "email": "kyle@salad.com",
+            "organization": "Salad Technologies",
+            "organizationUrl": "https://salad.com"
+          }
+        ],
+        "githubRepoName": "salad-cloud-imds-sdk-java",
+        "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-java",
+        "ignoreFiles": [".gitignore", "LICENSE"],
+        "liblabVersion": "2",
+        "sdkVersion": "0.9.0-alpha.1",
+        "targetBranch": "main"
+      },
+      "python": {
+        "alwaysInitializeOptionals": true,
+        "classifiers": [
+          "Development Status :: 3 - Alpha",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: MIT License",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Topic :: Internet",
+          "Topic :: Software Development",
+          "Topic :: Software Development :: Libraries"
+        ],
+        "projectUrls": {
+          "Homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-python",
+          "Documentation": "https://docs.salad.com",
+          "Repository": "https://github.com/SaladTechnologies/salad-cloud-imds-sdk-python.git",
+          "Issues": "https://github.com/SaladTechnologies/salad-cloud-imds-sdk-python/issues"
+        },
+        "pypiPackageName": "salad-cloud-imds-sdk",
+        "authors": [
+          {
+            "email": "dev@salad.com",
+            "name": "SaladCloud Developers"
+          },
+          {
+            "email": "kyle@salad.com",
+            "name": "Kyle Dodson"
+          }
+        ],
+        "githubRepoName": "salad-cloud-imds-sdk-python",
+        "ignoreFiles": [".gitignore", "LICENSE"],
+        "liblabVersion": "2",
+        "sdkVersion": "0.9.0-alpha.1",
+        "targetBranch": "main"
+      },
+      "typescript": {
+        "bundle": true,
+        "exportClassDefault": false,
+        "httpClient": "fetch",
+        "npmName": "salad-cloud-imds-sdk",
+        "npmOrg": "saladtechnologies-oss",
+        "authors": [
+          {
+            "email": "dev@salad.com",
+            "name": "SaladCloud Developers"
+          },
+          {
+            "email": "kyle@salad.com",
+            "name": "Kyle Dodson"
+          }
+        ],
+        "githubRepoName": "salad-cloud-imds-sdk-javascript",
+        "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-javascript",
+        "ignoreFiles": [".gitignore", "LICENSE"],
+        "liblabVersion": "2",
+        "sdkVersion": "0.9.0-alpha.1",
+        "targetBranch": "main"
+      }
+    },
+    "publishing": {
+      "githubOrg": "SaladTechnologies"
+    },
+    "apiName": "SaladCloud IMDS",
+    "apiVersion": "0.9.0-alpha.1",
+    "devContainer": true,
+    "generateEnv": true,
+    "includeOptionalSnippetParameters": true,
+    "inferServiceNames": false,
+    "license": {
+      "type": "MIT",
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT",
+      "path": "MIT.ejs"
+    },
+    "responseHeaders": false,
+    "retry": {
+      "enabled": true,
+      "maxAttempts": 3,
+      "retryDelay": 150,
+      "maxDelay": 5000,
+      "retryDelayJitter": 50,
+      "backOffFactor": 2,
+      "httpCodesToRetry": [408, 429, 500, 502, 503, 504],
+      "httpMethodsToRetry": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
+    },
+    "multiTenant": true,
+    "hooksLocation": {
+      "bucketKey": "7017/hooks.zip",
+      "bucketName": "prod-liblab-api-stack-hooks"
+    },
+    "includeWatermark": false,
+    "language": "typescript",
+    "deliveryMethod": "zip",
+    "hooks": {
+      "enabled": true,
+      "sourceDir": "/tmp/resources/hooks"
+    },
+    "bundle": true,
+    "exportClassDefault": false,
+    "httpClient": "fetch",
+    "npmName": "salad-cloud-imds-sdk",
+    "npmOrg": "saladtechnologies-oss",
+    "authors": [
+      {
+        "email": "dev@salad.com",
+        "name": "SaladCloud Developers"
+      },
+      {
+        "email": "kyle@salad.com",
+        "name": "Kyle Dodson"
+      }
+    ],
+    "githubRepoName": "salad-cloud-imds-sdk-javascript",
+    "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-javascript",
+    "ignoreFiles": [".gitignore", "LICENSE"],
+    "targetBranch": "main",
+    "typescriptVersion": "5.3.3",
+    "zodVersion": "3.22.0",
+    "compilerOptions": {
+      "target": "es6",
+      "module": "Node16",
+      "lib": ["es2017", "dom"]
+    },
+    "usesFormData": false,
+    "authentication": {},
+    "environmentVariables": [],
+    "fileOutput": "/tmp",
+    "httpLibrary": {
+      "name": "fetch",
+      "packages": {},
+      "languages": ["typescript"],
+      "types": {
+        "packageName": "@types/isomorphic-fetch",
+        "version": "^0.0.36"
+      }
+    },
+    "auth": [],
+    "customQueries": {
+      "paths": [],
+      "rawQueries": [],
+      "queriesData": []
+    }
+  },
+  "files": [
+    "package.json",
+    "tsconfig.json",
+    "examples/tsconfig.json",
+    "examples/package.json",
+    "examples/README.md",
+    "examples/src/index.ts",
+    "src/http/client.ts",
+    "src/services/metadata/models/reallocate-container.ts",
+    "src/services/metadata/models/container-status.ts",
+    "src/services/metadata/models/container-token.ts",
+    "src/services/base-service.ts",
+    "src/services/metadata/metadata.ts",
+    "src/index.ts",
+    "src/services/metadata/models/index.ts",
+    "src/services/metadata/index.ts",
+    "src/http/index.ts",
+    "src/http/handlers/handler-chain.ts",
+    "src/http/types.ts",
+    "src/http/error.ts",
+    "src/http/handlers/terminating-handler.ts",
+    "src/http/handlers/hook-handler.ts",
+    "src/http/hooks/custom-hook.ts",
+    "src/http/hooks/hook.ts",
+    "src/http/handlers/retry-handler.ts",
+    "src/http/environment.ts",
+    "src/http/handlers/response-validation-handler.ts",
+    "./LICENSE",
+    "documentation/snippets/v1-reallocate-post.md",
+    "documentation/snippets/v1-status-get.md",
+    "documentation/snippets/v1-token-get.md",
+    "documentation/models/ReallocateContainer.md",
+    "documentation/models/ContainerStatus.md",
+    "documentation/models/ContainerToken.md",
+    "src/http/handlers/request-validation-handler.ts",
+    ".devcontainer/devcontainer.json",
+    "src/http/transport/request.ts",
+    "src/http/transport/request-builder.ts",
+    "src/http/serialization/base-serializer.ts",
+    "src/http/serialization/query-serializer.ts",
+    "src/http/serialization/path-serializer.ts",
+    "src/http/serialization/header-serializer.ts",
+    "src/http/transport/request-fetch-adapter.ts",
+    "src/http/transport/transport-hook-adapter.ts",
+    "documentation/services/MetadataService.md",
+    "README.md"
+  ]
+}
