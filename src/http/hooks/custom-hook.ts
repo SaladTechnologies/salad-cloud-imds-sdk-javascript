@@ -5,10 +5,10 @@ import { HttpRequest, HttpResponse, HttpError } from './hook';
 export class CustomHook implements Hook {
   public async beforeRequest(request: HttpRequest, params: Map<string, string>): Promise<HttpRequest> {
     if (request.headers == null) {
-      request.headers = {};
+      request.headers = new Map<string, unknown>();
     }
 
-    request.headers['Metadata'] = 'true';
+    request.headers.set('Metadata', 'true');
     return request;
   }
 

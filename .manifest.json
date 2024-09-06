@@ -1,6 +1,6 @@
 {
   "liblabVersion": "2.1.31",
-  "date": "2024-09-05T21:54:58.569Z",
+  "date": "2024-09-06T00:38:54.512Z",
   "config": {
     "apiId": 1126,
     "sdkName": "salad-cloud-imds-sdk",
@@ -155,7 +155,7 @@
     },
     "multiTenant": true,
     "hooksLocation": {
-      "bucketKey": "7017/hooks.zip",
+      "bucketKey": "7019/hooks.zip",
       "bucketName": "prod-liblab-api-stack-hooks"
     },
     "includeWatermark": false,
