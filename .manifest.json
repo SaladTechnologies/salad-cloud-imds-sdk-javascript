@@ -1,6 +1,6 @@
 {
   "liblabVersion": "2.1.31",
-  "date": "2024-09-06T00:38:54.512Z",
+  "date": "2024-09-06T14:42:21.534Z",
   "config": {
     "apiId": 1126,
     "sdkName": "salad-cloud-imds-sdk",
@@ -23,7 +23,7 @@
         ],
         "githubRepoName": "salad-cloud-imds-sdk-dotnet",
         "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-dotnet",
-        "ignoreFiles": [".gitignore", "LICENSE"],
+        "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
         "sdkVersion": "0.9.0-alpha.1",
         "targetBranch": "main"
@@ -31,7 +31,7 @@
       "go": {
         "goModuleName": "github.com/saladtechnologies/salad-cloud-imds-sdk-go",
         "githubRepoName": "salad-cloud-imds-sdk-go",
-        "ignoreFiles": [".gitignore", "LICENSE"],
+        "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
         "sdkVersion": "0.9.0-alpha.1",
         "targetBranch": "main"
@@ -55,7 +55,7 @@
         ],
         "githubRepoName": "salad-cloud-imds-sdk-java",
         "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-java",
-        "ignoreFiles": [".gitignore", "LICENSE"],
+        "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
         "sdkVersion": "0.9.0-alpha.1",
         "targetBranch": "main"
@@ -98,7 +98,7 @@
           }
         ],
         "githubRepoName": "salad-cloud-imds-sdk-python",
-        "ignoreFiles": [".gitignore", "LICENSE"],
+        "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
         "sdkVersion": "0.9.0-alpha.1",
         "targetBranch": "main"
@@ -121,7 +121,7 @@
         ],
         "githubRepoName": "salad-cloud-imds-sdk-javascript",
         "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-javascript",
-        "ignoreFiles": [".gitignore", "LICENSE"],
+        "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
         "sdkVersion": "0.9.0-alpha.1",
         "targetBranch": "main"
@@ -155,7 +155,7 @@
     },
     "multiTenant": true,
     "hooksLocation": {
-      "bucketKey": "7019/hooks.zip",
+      "bucketKey": "7034/hooks.zip",
       "bucketName": "prod-liblab-api-stack-hooks"
     },
     "includeWatermark": false,
@@ -182,7 +182,7 @@
     ],
     "githubRepoName": "salad-cloud-imds-sdk-javascript",
     "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-javascript",
-    "ignoreFiles": [".gitignore", "LICENSE"],
+    "ignoreFiles": [".gitignore", "./LICENSE"],
     "targetBranch": "main",
     "typescriptVersion": "5.3.3",
     "zodVersion": "3.22.0",
@@ -238,7 +238,6 @@
     "src/http/handlers/retry-handler.ts",
     "src/http/environment.ts",
     "src/http/handlers/response-validation-handler.ts",
-    "./LICENSE",
     "documentation/snippets/v1-reallocate-post.md",
     "documentation/snippets/v1-status-get.md",
     "documentation/snippets/v1-token-get.md",
