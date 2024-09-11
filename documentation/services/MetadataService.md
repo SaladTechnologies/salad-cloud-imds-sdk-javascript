@@ -17,9 +17,9 @@ Reallocates the running container to another Salad Node
 
 **Parameters**
 
-| Name | Type                                                    | Required | Description       |
-| :--- | :------------------------------------------------------ | :------- | :---------------- |
-| body | [ReallocateContainer](../models/ReallocateContainer.md) | ✅       | The request body. |
+| Name | Type                                                      | Required | Description       |
+| :--- | :-------------------------------------------------------- | :------- | :---------------- |
+| body | `[ReallocateContainer](../models/ReallocateContainer.md)` | ✅       | The request body. |
 
 **Example Usage Code Snippet**
 
@@ -30,7 +30,7 @@ import { ReallocateContainer, SaladCloudImdsSdk } from '@saladtechnologies-oss/s
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
   const reallocateContainer: ReallocateContainer = {
-    reason: 'aliqua ad dolor officia',
+    reason: 'laborum culpa',
   };
 
   const { data } = await saladCloudImdsSdk.metadata.reallocateContainer(input);

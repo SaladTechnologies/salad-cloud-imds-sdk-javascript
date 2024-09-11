@@ -1,11 +1,11 @@
-# SaladCloudImdsSdk TypeScript SDK 0.9.0-alpha.1
+# SaladCloudImdsSdk TypeScript SDK 0.9.0-alpha.2
 
 Welcome to the SaladCloudImdsSdk SDK documentation. This guide will help you get started with integrating and using the SaladCloudImdsSdk SDK in your project.
 
 ## Versions
 
 - API version: `0.9.0-alpha.1`
-- SDK version: `0.9.0-alpha.1`
+- SDK version: `0.9.0-alpha.2`
 
 ## About the API
 
