@@ -17,8 +17,8 @@ export class MetadataService extends BaseService {
     requestConfig?: RequestConfig,
   ): Promise<HttpResponse<undefined>> {
     const request = new RequestBuilder<undefined>()
-      .setConfig(this.config)
       .setBaseUrl(this.config)
+      .setConfig(this.config)
       .setMethod('POST')
       .setPath('/v1/reallocate')
       .setRequestSchema(reallocateContainerRequest)
@@ -40,8 +40,8 @@ export class MetadataService extends BaseService {
    */
   async getContainerStatus(requestConfig?: RequestConfig): Promise<HttpResponse<ContainerStatus>> {
     const request = new RequestBuilder<ContainerStatus>()
-      .setConfig(this.config)
       .setBaseUrl(this.config)
+      .setConfig(this.config)
       .setMethod('GET')
       .setPath('/v1/status')
       .setRequestSchema(z.any())
@@ -61,8 +61,8 @@ export class MetadataService extends BaseService {
    */
   async getContainerToken(requestConfig?: RequestConfig): Promise<HttpResponse<ContainerToken>> {
     const request = new RequestBuilder<ContainerToken>()
-      .setConfig(this.config)
       .setBaseUrl(this.config)
+      .setConfig(this.config)
       .setMethod('GET')
       .setPath('/v1/token')
       .setRequestSchema(z.any())

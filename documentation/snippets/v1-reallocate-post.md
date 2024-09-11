@@ -5,7 +5,7 @@ import { ReallocateContainer, SaladCloudImdsSdk } from '@saladtechnologies-oss/s
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
   const reallocateContainer: ReallocateContainer = {
-    reason: 'aliqua ad dolor officia',
+    reason: 'laborum culpa',
   };
 
   const { data } = await saladCloudImdsSdk.metadata.reallocateContainer(input);

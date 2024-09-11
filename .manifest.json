@@ -1,10 +1,10 @@
 {
-  "liblabVersion": "2.1.31",
-  "date": "2024-09-06T14:42:21.534Z",
+  "liblabVersion": "2.3.1",
+  "date": "2024-09-11T23:34:32.865Z",
   "config": {
     "apiId": 1126,
     "sdkName": "salad-cloud-imds-sdk",
-    "sdkVersion": "0.9.0-alpha.1",
+    "sdkVersion": "0.9.0-alpha.2",
     "liblabVersion": "2",
     "deliveryMethods": ["zip"],
     "languages": ["typescript"],
@@ -25,7 +25,7 @@
         "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-dotnet",
         "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
-        "sdkVersion": "0.9.0-alpha.1",
+        "sdkVersion": "0.9.0-alpha.2",
         "targetBranch": "main"
       },
       "go": {
@@ -33,7 +33,7 @@
         "githubRepoName": "salad-cloud-imds-sdk-go",
         "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
-        "sdkVersion": "0.9.0-alpha.1",
+        "sdkVersion": "0.9.0-alpha.2",
         "targetBranch": "main"
       },
       "java": {
@@ -57,7 +57,7 @@
         "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-java",
         "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
-        "sdkVersion": "0.9.0-alpha.1",
+        "sdkVersion": "0.9.0-alpha.2",
         "targetBranch": "main"
       },
       "python": {
@@ -100,7 +100,7 @@
         "githubRepoName": "salad-cloud-imds-sdk-python",
         "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
-        "sdkVersion": "0.9.0-alpha.1",
+        "sdkVersion": "0.9.0-alpha.2",
         "targetBranch": "main"
       },
       "typescript": {
@@ -123,7 +123,7 @@
         "homepage": "https://github.com/saladtechnologies/salad-cloud-imds-sdk-javascript",
         "ignoreFiles": [".gitignore", "./LICENSE"],
         "liblabVersion": "2",
-        "sdkVersion": "0.9.0-alpha.1",
+        "sdkVersion": "0.9.0-alpha.2",
         "targetBranch": "main"
       }
     },
@@ -155,7 +155,7 @@
     },
     "multiTenant": true,
     "hooksLocation": {
-      "bucketKey": "7034/hooks.zip",
+      "bucketKey": "7096/hooks.zip",
       "bucketName": "prod-liblab-api-stack-hooks"
     },
     "includeWatermark": false,
@@ -189,7 +189,7 @@
     "compilerOptions": {
       "target": "es6",
       "module": "Node16",
-      "lib": ["es2017", "dom"]
+      "lib": ["es2018", "dom"]
     },
     "usesFormData": false,
     "authentication": {},
