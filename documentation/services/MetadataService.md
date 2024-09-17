@@ -17,9 +17,9 @@ Reallocates the running container to another Salad Node
 
 **Parameters**
 
-| Name | Type                                                      | Required | Description       |
-| :--- | :-------------------------------------------------------- | :------- | :---------------- |
-| body | `[ReallocateContainer](../models/ReallocateContainer.md)` | ✅       | The request body. |
+| Name | Type                                                    | Required | Description       |
+| :--- | :------------------------------------------------------ | :------- | :---------------- |
+| body | [ReallocateContainer](../models/ReallocateContainer.md) | ✅       | The request body. |
 
 **Example Usage Code Snippet**
 
