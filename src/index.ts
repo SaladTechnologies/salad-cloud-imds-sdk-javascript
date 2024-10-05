@@ -26,8 +26,8 @@ export class SaladCloudImdsSdk {
     this.metadata.baseUrl = environment;
   }
 
-  set timeout(timeout: number) {
-    this.metadata.timeout = timeout;
+  set timeoutMs(timeoutMs: number) {
+    this.metadata.timeoutMs = timeoutMs;
   }
 }
 
