@@ -1,14 +1,14 @@
 ```typescript
-import { ReallocateContainer, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { ReallocatePrototype, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
-  const reallocateContainer: ReallocateContainer = {
-    reason: 'laborum culpa',
+  const reallocatePrototype: ReallocatePrototype = {
+    reason: 'Insufficient VRAM',
   };
 
-  const { data } = await saladCloudImdsSdk.metadata.reallocateContainer(input);
+  const { data } = await saladCloudImdsSdk.metadata.reallocate(reallocatePrototype);
 
   console.log(data);
 })();

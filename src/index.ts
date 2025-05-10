@@ -4,17 +4,13 @@ import { MetadataService } from './services/metadata';
 
 export * from './services/metadata';
 
-export type * from './http';
+export * from './http';
+export { Environment } from './http/environment';
 
 export class SaladCloudImdsSdk {
   public readonly metadata: MetadataService;
 
   constructor(public config: SdkConfig) {
-    const baseUrl = config.environment || config.baseUrl || Environment.DEFAULT;
-    this.config = {
-      ...config,
-      baseUrl,
-    };
     this.metadata = new MetadataService(this.config);
   }
 

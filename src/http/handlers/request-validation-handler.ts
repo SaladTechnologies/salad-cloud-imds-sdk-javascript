@@ -1,59 +1,89 @@
+import { ZodError } from 'zod';
 import { Request } from '../transport/request';
 import { ContentType, HttpResponse, RequestHandler } from '../types';
-import { HttpError } from '../error';
+import { ValidationError } from '../errors/validation-error';
 
 export class RequestValidationHandler implements RequestHandler {
   next?: RequestHandler;
 
-  async handle<T>(request: Request<T>): Promise<HttpResponse<T>> {
+  async handle<T>(request: Request): Promise<HttpResponse<T>> {
     if (!this.next) {
       throw new Error('No next handler set in ContentTypeHandler.');
     }
 
+    this.validateRequest(request);
+
+    return this.next.handle<T>(request);
+  }
+
+  async *stream<T>(request: Request): AsyncGenerator<HttpResponse<T>> {
+    if (!this.next) {
+      throw new Error('No next handler set in ContentTypeHandler.');
+    }
+
+    this.validateRequest(request);
+
+    yield* this.next.stream<T>(request);
+  }
+
+  validateRequest(request: Request): void {
     if (request.requestContentType === ContentType.Json) {
-      request.body = JSON.stringify(request.requestSchema?.parse(request.body));
+      try {
+        const parsedBody = request.requestSchema?.parse(request.body);
+        request.body = JSON.stringify(parsedBody);
+      } catch (error) {
+        if (error instanceof ZodError) {
+          throw new ValidationError(error, request.body);
+        }
+        throw error;
+      }
     } else if (
       request.requestContentType === ContentType.Xml ||
-      request.requestContentType === ContentType.Binary ||
-      request.requestContentType === ContentType.Text
+      request.requestContentType === ContentType.Text ||
+      request.requestContentType === ContentType.Image ||
+      request.requestContentType === ContentType.Binary
     ) {
       request.body = request.body;
     } else if (request.requestContentType === ContentType.FormUrlEncoded) {
-      request.body = this.toFormUrlEncoded(request.body);
+      request.body = this.toFormUrlEncoded(request);
     } else if (request.requestContentType === ContentType.MultipartFormData) {
       request.body = this.toFormData(request.body);
     } else {
       request.body = JSON.stringify(request.requestSchema?.parse(request.body));
     }
-
-    return await this.next.handle(request);
   }
 
-  toFormUrlEncoded(body: BodyInit | undefined): string {
-    if (body === undefined) {
+  toFormUrlEncoded(request: Request): string {
+    if (request.body === undefined) {
       return '';
     }
 
-    if (typeof body === 'string') {
-      return body;
+    if (typeof request.body === 'string') {
+      return request.body;
     }
 
-    if (body instanceof URLSearchParams) {
-      return body.toString();
+    if (request.body instanceof URLSearchParams) {
+      return request.body.toString();
     }
 
-    if (body instanceof FormData) {
+    const validatedBody = request.requestSchema?.parse(request.body);
+
+    if (validatedBody instanceof FormData) {
       const params = new URLSearchParams();
-      body.forEach((value, key) => {
-        params.append(key, value.toString());
+      validatedBody.forEach((value, key) => {
+        if (value != null) {
+          params.append(key, value.toString());
+        }
       });
       return params.toString();
     }
 
-    if (typeof body === 'object' && !Array.isArray(body)) {
+    if (typeof validatedBody === 'object' && !Array.isArray(validatedBody)) {
       const params = new URLSearchParams();
-      for (const [key, value] of Object.entries(body)) {
-        params.append(key, value.toString());
+      for (const [key, value] of Object.entries(validatedBody)) {
+        if (value != null) {
+          params.append(key, `${value}`);
+        }
       }
       return params.toString();
     }
