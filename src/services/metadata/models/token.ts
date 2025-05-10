@@ -3,24 +3,24 @@ import { z } from 'zod';
 /**
  * The shape of the model inside the application code - what the users use
  */
-export const containerToken = z.lazy(() => {
+export const token = z.lazy(() => {
   return z.object({
     jwt: z.string().min(1).max(1000),
   });
 });
 
 /**
- * Represents the identity token of the running container.
- * @typedef  {ContainerToken} containerToken - Represents the identity token of the running container. - Represents the identity token of the running container.
+ * The identity token of the current container instance.
+ * @typedef  {Token} token - The identity token of the current container instance. - The identity token of the current container instance.
  * @property {string} - The JSON Web Token (JWT) that may be used to identify the running container. The JWT may be verified using the JSON Web Key Set (JWKS) available at https://matrix-rest-api.salad.com/.well-known/stash-jwks.json.
  */
-export type ContainerToken = z.infer<typeof containerToken>;
+export type Token = z.infer<typeof token>;
 
 /**
  * The shape of the model mapping from the api schema into the application shape.
  * Is equal to application shape if all property names match the api schema
  */
-export const containerTokenResponse = z.lazy(() => {
+export const tokenResponse = z.lazy(() => {
   return z
     .object({
       jwt: z.string().min(1).max(1000),
@@ -34,8 +34,12 @@ export const containerTokenResponse = z.lazy(() => {
  * The shape of the model mapping from the application shape into the api schema.
  * Is equal to application shape if all property names match the api schema
  */
-export const containerTokenRequest = z.lazy(() => {
-  return z.object({ jwt: z.string().nullish() }).transform((data) => ({
-    jwt: data['jwt'],
-  }));
+export const tokenRequest = z.lazy(() => {
+  return z
+    .object({
+      jwt: z.string().min(1).max(1000),
+    })
+    .transform((data) => ({
+      jwt: data['jwt'],
+    }));
 });
