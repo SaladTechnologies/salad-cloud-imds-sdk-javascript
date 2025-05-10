@@ -2,7 +2,7 @@ import { ZodType } from 'zod';
 import { Environment } from './environment';
 import { Request } from './transport/request';
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
 export interface SdkConfig {
   baseUrl?: string;
@@ -27,7 +27,8 @@ export interface HttpResponse<T = unknown> {
 export interface RequestHandler {
   next?: RequestHandler;
 
-  handle<T>(request: Request<T>): Promise<HttpResponse<T>>;
+  handle<T>(request: Request): Promise<HttpResponse<T>>;
+  stream<T>(request: Request): AsyncGenerator<HttpResponse<T>>;
 }
 
 export enum ContentType {
@@ -40,6 +41,8 @@ export enum ContentType {
   FormUrlEncoded = 'form',
   Text = 'text',
   MultipartFormData = 'multipartFormData',
+  EventStream = 'eventStream',
+  NoContent = 'noContent',
 }
 
 export interface Options<T> {
@@ -56,6 +59,7 @@ export interface Options<T> {
 export interface RequestConfig {
   retry?: RetryOptions;
   validation?: ValidationOptions;
+  baseUrl?: string;
 }
 
 export interface RetryOptions {

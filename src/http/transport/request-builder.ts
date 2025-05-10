@@ -1,11 +1,18 @@
 import z, { ZodType } from 'zod';
-import { Request, CreateRequestParameters, RequestParameter, RequestPagination } from './request';
+import { Request } from './request';
+import {
+  CreateRequestParameters,
+  RequestParameter,
+  RequestPagination,
+  ResponseDefinition,
+  ErrorDefinition,
+} from './types';
 import { ContentType, HttpMethod, SdkConfig, RequestConfig, RetryOptions, ValidationOptions } from '../types';
 import { Environment } from '../environment';
 import { SerializationStyle } from '../serialization/base-serializer';
 
-export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
-  private params: CreateRequestParameters<FullResponse, Page>;
+export class RequestBuilder<Page extends unknown[] = unknown[]> {
+  private params: CreateRequestParameters<Page>;
 
   constructor() {
     this.params = {
@@ -13,10 +20,10 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
       method: 'GET',
       path: '',
       config: {},
-      responseSchema: z.any(),
+      responses: [],
+      errors: [],
       requestSchema: z.any(),
       requestContentType: ContentType.Json,
-      responseContentType: ContentType.Json,
       retry: {
         attempts: 3,
         delayMs: 150,
@@ -30,7 +37,7 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
     };
   }
 
-  setRetryAttempts(sdkConfig?: SdkConfig, requestConfig?: RequestConfig): RequestBuilder<FullResponse, Page> {
+  setRetryAttempts(sdkConfig?: SdkConfig, requestConfig?: RequestConfig): RequestBuilder<Page> {
     if (requestConfig?.retry?.attempts !== undefined) {
       this.params.retry.attempts = requestConfig.retry.attempts;
     } else if (sdkConfig?.retry?.attempts !== undefined) {
@@ -40,7 +47,7 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
     return this;
   }
 
-  setRetryDelayMs(sdkConfig?: SdkConfig, requestConfig?: RequestConfig): RequestBuilder<FullResponse, Page> {
+  setRetryDelayMs(sdkConfig?: SdkConfig, requestConfig?: RequestConfig): RequestBuilder<Page> {
     if (requestConfig?.retry?.delayMs !== undefined) {
       this.params.retry.delayMs = requestConfig.retry.delayMs;
     } else if (sdkConfig?.retry?.delayMs !== undefined) {
@@ -50,7 +57,7 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
     return this;
   }
 
-  setResponseValidation(sdkConfig: SdkConfig, requestConfig?: RequestConfig): RequestBuilder<FullResponse, Page> {
+  setResponseValidation(sdkConfig: SdkConfig, requestConfig?: RequestConfig): RequestBuilder<Page> {
     if (requestConfig?.validation?.responseValidation !== undefined) {
       this.params.validation.responseValidation = requestConfig.validation.responseValidation;
     } else if (sdkConfig?.validation?.responseValidation !== undefined) {
@@ -60,62 +67,113 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
     return this;
   }
 
-  setBaseUrl(sdkConfig: SdkConfig): RequestBuilder<FullResponse, Page> {
-    if (sdkConfig?.baseUrl !== undefined) {
-      this.params.baseUrl = sdkConfig.baseUrl;
+  setBaseUrl(baseUrl: string | undefined): RequestBuilder<Page> {
+    if (baseUrl) {
+      this.params.baseUrl = baseUrl;
     }
 
     return this;
   }
 
-  setMethod(method: HttpMethod): RequestBuilder<FullResponse, Page> {
+  setMethod(method: HttpMethod): RequestBuilder<Page> {
     this.params.method = method;
     return this;
   }
 
-  setPath(path: string): RequestBuilder<FullResponse, Page> {
+  setPath(path: string): RequestBuilder<Page> {
     this.params.path = path;
     return this;
   }
 
-  setConfig(config: SdkConfig): RequestBuilder<FullResponse, Page> {
+  setConfig(config: SdkConfig): RequestBuilder<Page> {
     this.params.config = config;
     return this;
   }
 
-  setRequestContentType(contentType: ContentType): RequestBuilder<FullResponse, Page> {
+  setRequestContentType(contentType: ContentType): RequestBuilder<Page> {
     this.params.requestContentType = contentType;
     return this;
   }
 
-  setResponseContentType(contentType: ContentType): RequestBuilder<FullResponse, Page> {
-    this.params.responseContentType = contentType;
-    return this;
-  }
-
-  setRequestSchema(requestSchema: ZodType): RequestBuilder<FullResponse, Page> {
+  setRequestSchema(requestSchema: ZodType): RequestBuilder<Page> {
     this.params.requestSchema = requestSchema;
     return this;
   }
 
-  setResponseSchema(responseSchema: ZodType): RequestBuilder<FullResponse, Page> {
-    this.params.responseSchema = responseSchema;
-    return this;
-  }
-
-  setPagination(pagination: RequestPagination<Page>): RequestBuilder<FullResponse, Page> {
+  setPagination(pagination: RequestPagination<Page>): RequestBuilder<Page> {
     this.params.pagination = pagination;
     return this;
   }
 
-  addBody(body?: any): RequestBuilder<FullResponse, Page> {
+  addAccessTokenAuth(accessToken?: string, prefix?: string): RequestBuilder<Page> {
+    if (accessToken === undefined) {
+      return this;
+    }
+
+    this.params.headers.set('Authorization', {
+      key: 'Authorization',
+      value: `${prefix ?? 'BEARER'} ${accessToken}`,
+      explode: false,
+      style: SerializationStyle.SIMPLE,
+      encode: true,
+      isLimit: false,
+      isOffset: false,
+    });
+    return this;
+  }
+
+  addBasicAuth(username?: string, password?: string): RequestBuilder<Page> {
+    if (username === undefined || password === undefined) {
+      return this;
+    }
+
+    this.params.headers.set('Authorization', {
+      key: 'Authorization',
+      value: `Basic ${this.toBase64(`${username}:${password}`)}`,
+      explode: false,
+      style: SerializationStyle.SIMPLE,
+      encode: true,
+      isLimit: false,
+      isOffset: false,
+    });
+    return this;
+  }
+
+  addApiKeyAuth(apiKey?: string, keyName?: string): RequestBuilder<Page> {
+    if (apiKey === undefined) {
+      return this;
+    }
+
+    this.params.headers.set(keyName ?? 'X-API-KEY', {
+      key: keyName ?? 'X-API-KEY',
+      value: apiKey,
+      explode: false,
+      style: SerializationStyle.SIMPLE,
+      encode: true,
+      isLimit: false,
+      isOffset: false,
+    });
+    return this;
+  }
+
+  addResponse(response: ResponseDefinition): RequestBuilder<Page> {
+    this.params.responses.push(response);
+    return this;
+  }
+
+  addError(error: ErrorDefinition): RequestBuilder<Page> {
+    this.params.errors.push(error);
+    return this;
+  }
+
+  addBody(body?: any): RequestBuilder<Page> {
     if (body !== undefined) {
       this.params.body = body;
     }
     return this;
   }
 
-  addPathParam(param: Partial<RequestParameter>): RequestBuilder<FullResponse, Page> {
+  addPathParam(param: Partial<RequestParameter>): RequestBuilder<Page> {
     if (param.value === undefined || param.key === undefined) {
       return this;
     }
@@ -133,7 +191,7 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
     return this;
   }
 
-  addQueryParam(param: Partial<RequestParameter>): RequestBuilder<FullResponse, Page> {
+  addQueryParam(param: Partial<RequestParameter>): RequestBuilder<Page> {
     if (param.value === undefined || param.key === undefined) {
       return this;
     }
@@ -151,7 +209,7 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
     return this;
   }
 
-  addHeaderParam(param: Partial<RequestParameter>): RequestBuilder<FullResponse, Page> {
+  addHeaderParam(param: Partial<RequestParameter>): RequestBuilder<Page> {
     if (param.value === undefined || param.key === undefined) {
       return this;
     }
@@ -169,7 +227,15 @@ export class RequestBuilder<FullResponse, Page extends unknown[] = unknown[]> {
     return this;
   }
 
-  public build(): Request<FullResponse, Page> {
-    return new Request<FullResponse, Page>(this.params);
+  public build(): Request<Page> {
+    return new Request<Page>(this.params);
+  }
+
+  private toBase64(str: string): string {
+    if (typeof window === 'undefined') {
+      return Buffer.from(str, 'utf-8').toString('base64');
+    } else {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
   }
 }
