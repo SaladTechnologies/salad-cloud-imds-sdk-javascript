@@ -19,6 +19,12 @@ Gets the deletion cost of the current container instance
 - HTTP Method: `GET`
 - Endpoint: `/v1/deletion-cost`
 
+**Parameters**
+
+| Name     | Type                              | Required | Description                                         |
+| :------- | :-------------------------------- | :------- | :-------------------------------------------------- |
+| metadata | [Metadata](../models/Metadata.md) | ✅       | A custom request header required by all operations. |
+
 **Return Type**
 
 `DeletionCost`
@@ -26,12 +32,16 @@ Gets the deletion cost of the current container instance
 **Example Usage Code Snippet**
 
 ```typescript
-import { SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { Metadata, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
-  const { data } = await saladCloudImdsSdk.metadata.getDeletionCost();
+  const metadata = Metadata.TRUE_;
+
+  const { data } = await saladCloudImdsSdk.metadata.getDeletionCost({
+    metadata: metadata,
+  });
 
   console.log(data);
 })();
@@ -46,27 +56,28 @@ Replaces the deletion cost of the current container instance
 
 **Parameters**
 
-| Name | Type                                      | Required | Description       |
-| :--- | :---------------------------------------- | :------- | :---------------- |
-| body | [DeletionCost](../models/DeletionCost.md) | ✅       | The request body. |
-
-**Return Type**
-
-`DeletionCost`
+| Name     | Type                                      | Required | Description                                         |
+| :------- | :---------------------------------------- | :------- | :-------------------------------------------------- |
+| body     | [DeletionCost](../models/DeletionCost.md) | ✅       | The request body.                                   |
+| metadata | [Metadata](../models/Metadata.md)         | ✅       | A custom request header required by all operations. |
 
 **Example Usage Code Snippet**
 
 ```typescript
-import { DeletionCost, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { DeletionCost, Metadata, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
+
+  const metadata = Metadata.TRUE_;
 
   const deletionCost: DeletionCost = {
     deletionCost: 100,
   };
 
-  const { data } = await saladCloudImdsSdk.metadata.replaceDeletionCost(deletionCost);
+  const { data } = await saladCloudImdsSdk.metadata.replaceDeletionCost(deletionCost, {
+    metadata: metadata,
+  });
 
   console.log(data);
 })();
@@ -81,23 +92,28 @@ Reallocates the current container instance to another SaladCloud node
 
 **Parameters**
 
-| Name | Type                                                    | Required | Description       |
-| :--- | :------------------------------------------------------ | :------- | :---------------- |
-| body | [ReallocatePrototype](../models/ReallocatePrototype.md) | ✅       | The request body. |
+| Name     | Type                                                    | Required | Description                                         |
+| :------- | :------------------------------------------------------ | :------- | :-------------------------------------------------- |
+| body     | [ReallocatePrototype](../models/ReallocatePrototype.md) | ✅       | The request body.                                   |
+| metadata | [Metadata](../models/Metadata.md)                       | ✅       | A custom request header required by all operations. |
 
 **Example Usage Code Snippet**
 
 ```typescript
-import { ReallocatePrototype, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { Metadata, ReallocatePrototype, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
+
+  const metadata = Metadata.TRUE_;
 
   const reallocatePrototype: ReallocatePrototype = {
     reason: 'Insufficient VRAM',
   };
 
-  const { data } = await saladCloudImdsSdk.metadata.reallocate(reallocatePrototype);
+  const { data } = await saladCloudImdsSdk.metadata.reallocate(reallocatePrototype, {
+    metadata: metadata,
+  });
 
   console.log(data);
 })();
@@ -110,15 +126,25 @@ Recreates the current container instance on the same SaladCloud node
 - HTTP Method: `POST`
 - Endpoint: `/v1/recreate`
 
+**Parameters**
+
+| Name     | Type                              | Required | Description                                         |
+| :------- | :-------------------------------- | :------- | :-------------------------------------------------- |
+| metadata | [Metadata](../models/Metadata.md) | ✅       | A custom request header required by all operations. |
+
 **Example Usage Code Snippet**
 
 ```typescript
-import { SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { Metadata, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
-  const { data } = await saladCloudImdsSdk.metadata.recreate();
+  const metadata = Metadata.TRUE_;
+
+  const { data } = await saladCloudImdsSdk.metadata.recreate({
+    metadata: metadata,
+  });
 
   console.log(data);
 })();
@@ -131,15 +157,25 @@ Restarts the current container instance on the same SaladCloud node
 - HTTP Method: `POST`
 - Endpoint: `/v1/restart`
 
+**Parameters**
+
+| Name     | Type                              | Required | Description                                         |
+| :------- | :-------------------------------- | :------- | :-------------------------------------------------- |
+| metadata | [Metadata](../models/Metadata.md) | ✅       | A custom request header required by all operations. |
+
 **Example Usage Code Snippet**
 
 ```typescript
-import { SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { Metadata, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
-  const { data } = await saladCloudImdsSdk.metadata.restart();
+  const metadata = Metadata.TRUE_;
+
+  const { data } = await saladCloudImdsSdk.metadata.restart({
+    metadata: metadata,
+  });
 
   console.log(data);
 })();
@@ -152,6 +188,12 @@ Gets the health statuses of the current container instance
 - HTTP Method: `GET`
 - Endpoint: `/v1/status`
 
+**Parameters**
+
+| Name     | Type                              | Required | Description                                         |
+| :------- | :-------------------------------- | :------- | :-------------------------------------------------- |
+| metadata | [Metadata](../models/Metadata.md) | ✅       | A custom request header required by all operations. |
+
 **Return Type**
 
 `Status`
@@ -159,12 +201,16 @@ Gets the health statuses of the current container instance
 **Example Usage Code Snippet**
 
 ```typescript
-import { SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { Metadata, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
-  const { data } = await saladCloudImdsSdk.metadata.getStatus();
+  const metadata = Metadata.TRUE_;
+
+  const { data } = await saladCloudImdsSdk.metadata.getStatus({
+    metadata: metadata,
+  });
 
   console.log(data);
 })();
@@ -177,6 +223,12 @@ Gets the identity token of the current container instance
 - HTTP Method: `GET`
 - Endpoint: `/v1/token`
 
+**Parameters**
+
+| Name     | Type                              | Required | Description                                         |
+| :------- | :-------------------------------- | :------- | :-------------------------------------------------- |
+| metadata | [Metadata](../models/Metadata.md) | ✅       | A custom request header required by all operations. |
+
 **Return Type**
 
 `Token`
@@ -184,12 +236,16 @@ Gets the identity token of the current container instance
 **Example Usage Code Snippet**
 
 ```typescript
-import { SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
+import { Metadata, SaladCloudImdsSdk } from '@saladtechnologies-oss/salad-cloud-imds-sdk';
 
 (async () => {
   const saladCloudImdsSdk = new SaladCloudImdsSdk({});
 
-  const { data } = await saladCloudImdsSdk.metadata.getToken();
+  const metadata = Metadata.TRUE_;
+
+  const { data } = await saladCloudImdsSdk.metadata.getToken({
+    metadata: metadata,
+  });
 
   console.log(data);
 })();

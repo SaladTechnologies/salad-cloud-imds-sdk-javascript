@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ThrowableError } from '../../../http/errors/throwable-error';
 
 export type ISaladCloudImdsErrorSchema = {
   code?: string;
@@ -32,7 +33,7 @@ export const saladCloudImdsErrorResponse = z.lazy(() => {
     }));
 });
 
-export class SaladCloudImdsError extends Error {
+export class SaladCloudImdsError extends ThrowableError {
   public code?: string;
   public detail?: string;
   public errors?: any;
@@ -40,7 +41,10 @@ export class SaladCloudImdsError extends Error {
   public status?: number;
   public title?: string;
   public type?: string;
-  constructor(message?: string, response?: unknown) {
+  constructor(
+    public message: string,
+    protected response?: unknown,
+  ) {
     super(message);
 
     const parsedResponse = saladCloudImdsErrorResponse.parse(response);
@@ -52,5 +56,9 @@ export class SaladCloudImdsError extends Error {
     this.status = parsedResponse.status;
     this.title = parsedResponse.title;
     this.type = parsedResponse.type;
+  }
+
+  public throw() {
+    throw new SaladCloudImdsError(this.message, this.response);
   }
 }

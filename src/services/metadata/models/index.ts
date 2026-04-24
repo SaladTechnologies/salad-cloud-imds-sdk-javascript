@@ -1,4 +1,5 @@
 export type { DeletionCost } from './deletion-cost';
+export { Metadata } from './metadata';
 export type { ReallocatePrototype } from './reallocate-prototype';
 export type { Status } from './status';
 export type { Token } from './token';

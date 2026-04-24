@@ -4,6 +4,7 @@ import {
   CreateRequestParameters,
   RequestParameter,
   RequestPagination,
+  RequestCursorPagination,
   ResponseDefinition,
   ErrorDefinition,
 } from './types';
@@ -11,15 +12,25 @@ import { ContentType, HttpMethod, SdkConfig, RequestConfig, RetryOptions, Valida
 import { Environment } from '../environment';
 import { SerializationStyle } from '../serialization/base-serializer';
 
+/**
+ * Builder pattern implementation for constructing HTTP requests.
+ * Provides a fluent interface for configuring all aspects of an API request.
+ * @template Page - The type for paginated response pages
+ */
 export class RequestBuilder<Page extends unknown[] = unknown[]> {
+  /** Internal request parameters being built */
   private params: CreateRequestParameters<Page>;
 
+  /**
+   * Creates a new request builder with default configuration.
+   * Initializes retry settings, validation options, and empty parameter collections.
+   */
   constructor() {
     this.params = {
       baseUrl: Environment.DEFAULT,
       method: 'GET',
       path: '',
-      config: {},
+      config: {} as SdkConfig,
       responses: [],
       errors: [],
       requestSchema: z.any(),
@@ -34,6 +45,7 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
       pathParams: new Map(),
       queryParams: new Map(),
       headers: new Map(),
+      cookies: new Map(),
     };
   }
 
@@ -100,7 +112,26 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
     return this;
   }
 
+  setFilename(filename?: string): RequestBuilder<Page> {
+    if (filename !== undefined) {
+      this.params.filename = filename;
+    }
+    return this;
+  }
+
+  setFilenames(filenames?: string[]): RequestBuilder<Page> {
+    if (filenames !== undefined) {
+      this.params.filenames = filenames;
+    }
+    return this;
+  }
+
   setPagination(pagination: RequestPagination<Page>): RequestBuilder<Page> {
+    this.params.pagination = pagination;
+    return this;
+  }
+
+  setCursorPagination(pagination: RequestCursorPagination<Page>): RequestBuilder<Page> {
     this.params.pagination = pagination;
     return this;
   }
@@ -118,6 +149,7 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
       encode: true,
       isLimit: false,
       isOffset: false,
+      isCursor: false,
     });
     return this;
   }
@@ -135,6 +167,7 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
       encode: true,
       isLimit: false,
       isOffset: false,
+      isCursor: false,
     });
     return this;
   }
@@ -152,6 +185,7 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
       encode: true,
       isLimit: false,
       isOffset: false,
+      isCursor: false,
     });
     return this;
   }
@@ -186,13 +220,14 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
       encode: param.encode ?? true,
       isLimit: !!param.isLimit,
       isOffset: !!param.isOffset,
+      isCursor: !!param.isCursor,
     });
 
     return this;
   }
 
   addQueryParam(param: Partial<RequestParameter>): RequestBuilder<Page> {
-    if (param.value === undefined || param.key === undefined) {
+    if (param.key === undefined) {
       return this;
     }
 
@@ -204,6 +239,7 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
       encode: param.encode ?? true,
       isLimit: !!param.isLimit,
       isOffset: !!param.isOffset,
+      isCursor: !!param.isCursor,
     });
 
     return this;
@@ -222,15 +258,46 @@ export class RequestBuilder<Page extends unknown[] = unknown[]> {
       encode: param.encode ?? false,
       isLimit: !!param.isLimit,
       isOffset: !!param.isOffset,
+      isCursor: !!param.isCursor,
     });
 
     return this;
   }
 
+  addCookieParam(param: Partial<RequestParameter>): RequestBuilder<Page> {
+    if (param.value === undefined || param.key === undefined) {
+      return this;
+    }
+
+    this.params.cookies.set(param.key, {
+      key: param.key,
+      value: param.value,
+      explode: param.explode ?? true,
+      style: param.style ?? SerializationStyle.FORM,
+      encode: param.encode ?? false,
+      isLimit: !!param.isLimit,
+      isOffset: !!param.isOffset,
+      isCursor: !!param.isCursor,
+    });
+
+    return this;
+  }
+
+  /**
+   * Builds and returns the configured Request object.
+   * Call this method after configuring all request parameters.
+   * @returns A new Request instance with all configured parameters
+   */
   public build(): Request<Page> {
     return new Request<Page>(this.params);
   }
 
+  /**
+   * Converts a string to Base64 encoding.
+   * Works in both Node.js and browser environments.
+   * @param str - The string to encode
+   * @returns The Base64-encoded string
+   */
   private toBase64(str: string): string {
     if (typeof window === 'undefined') {
       return Buffer.from(str, 'utf-8').toString('base64');
