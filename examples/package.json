@@ -1,13 +1,13 @@
 {
   "name": "salad_cloud_imds_sdk",
-  "version": "0.9.0-alpha.5",
+  "version": "0.9.0-alpha.6",
   "private": true,
   "dependencies": {
     "@saladtechnologies-oss/salad-cloud-imds-sdk": "file:../",
     "zod": "3.22.0"
   },
   "scripts": {
-    "setup": "npm --prefix ../ install && npm --prefix ../ run build && npm install",
+    "setup": "npm --prefix ../ install && npm --prefix ../ run build && npm install && tsc",
     "start": "tsc && node dist/index.js",
     "dev": "ts-node src/index.ts"
   },

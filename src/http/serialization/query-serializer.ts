@@ -1,7 +1,18 @@
 import { RequestParameter } from '../transport/types';
 import { SerializationOptions, Serializer } from './base-serializer';
 
+/**
+ * Serializer for URL query string parameters.
+ * Converts query parameters into a URL query string.
+ */
 export class QuerySerializer extends Serializer {
+  /**
+   * Serializes query parameters into a URL query string.
+   * @param queryParams - Map of query parameter names to their values
+   * @returns A query string starting with "?" if parameters exist, empty string otherwise
+   * @example
+   * serialize(Map([["name", {...}], ["age", {...}]])) returns "?name=John&age=30"
+   */
   public serialize(queryParams: Map<string, RequestParameter>): string {
     if (!queryParams || !queryParams.size) {
       return '';
@@ -10,6 +21,11 @@ export class QuerySerializer extends Serializer {
     const query: string[] = [];
 
     queryParams.forEach((param) => {
+      // Skip parameters with undefined values
+      if (param.value === undefined) {
+        return;
+      }
+
       return query.push(`${this.serializeValue(param)}`);
     });
 
